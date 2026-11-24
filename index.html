@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ruta Local — Google Maps</title>
+<meta name="description" content="Prototipo para localizar comercios de proximidad y planificar una ruta de compra.">
+<style>
+:root{--forest:#174d3a;--forest2:#276b50;--leaf:#e0f0e4;--lime:#d7f27b;--cream:#f5f7f1;--paper:#fff;--ink:#1e2b24;--muted:#66736b;--line:#dce5dc;--gold:#fff2d4;--goldink:#72520a;--red:#ffebe7;--shadow:0 12px 38px rgba(28,55,38,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}.topbar{background:var(--forest);color:white;padding:16px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;gap:10px;align-items:center;font-size:1.16rem;font-weight:850;letter-spacing:-.04em}.brandmark{width:37px;height:37px;border-radius:12px;background:var(--lime);color:var(--forest);display:grid;place-items:center;font-size:22px}.topnote{color:#d6e7dc;font-size:.82rem}.hero{padding:28px clamp(16px,4vw,48px) 24px;display:flex;align-items:end;justify-content:space-between;gap:24px}.eyebrow{font-size:.72rem;font-weight:850;text-transform:uppercase;letter-spacing:.13em;color:var(--forest2)}h1{font-size:clamp(2.1rem,4.5vw,3.5rem);letter-spacing:-.06em;line-height:1.01;margin:9px 0 10px}.hero p{max-width:690px;color:var(--muted);line-height:1.5;margin:0}.pill{flex:none;background:var(--leaf);color:var(--forest);border:1px solid #cce3d1;padding:10px 13px;border-radius:100px;font-size:.8rem;font-weight:800}.layout{padding:0 clamp(12px,3vw,36px) 28px;display:grid;grid-template-columns:335px minmax(0,1fr);gap:18px;align-items:start}.panel{background:var(--paper);border:1px solid var(--line);border-radius:19px;overflow:hidden;box-shadow:var(--shadow)}.side{padding:20px}.sectiontitle{display:flex;gap:9px;align-items:center;margin:0 0 8px;font-size:.98rem;font-weight:850}.step{display:grid;place-items:center;width:28px;height:28px;flex:none;background:var(--leaf);color:var(--forest);border-radius:9px;font-size:.78rem}.help{font-size:.79rem;color:var(--muted);line-height:1.45;margin:0 0 12px 37px}.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:0;border-radius:11px;padding:11px 12px;font-size:.84rem;font-weight:800;transition:transform .12s}.btn:hover{transform:translateY(-1px)}.primary{background:var(--forest);color:white}.secondary{background:#edf4ee;color:var(--forest)}.outline{background:white;color:var(--ink);border:1px solid var(--line)}.btn:disabled{opacity:.55;cursor:wait;transform:none}.status{margin-top:10px;padding:10px 11px;border-radius:10px;font-size:.76rem;line-height:1.45;background:#f4f7f3;color:var(--muted)}.status.good{background:var(--leaf);color:var(--forest)}.status.warn{background:var(--gold);color:var(--goldink)}.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.field label{display:block;font-size:.73rem;font-weight:800;color:#46564b;margin-bottom:6px}.field select,.field input{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;color:var(--ink);min-width:0}.divider{height:1px;background:var(--line);margin:20px 0}.categories{display:grid;grid-template-columns:1fr 1fr;gap:7px}.cat{display:flex;align-items:center;gap:8px;min-height:54px;border:1px solid var(--line);border-radius:11px;padding:9px;font-size:.78rem;font-weight:750;cursor:pointer}.cat:has(input:checked){background:#f0f8f1;border-color:#7eb190}.cat input{accent-color:var(--forest);margin:0}.emoji{font-size:1.12rem}.checks{display:grid;gap:11px}.check{display:flex;align-items:flex-start;gap:8px;font-size:.79rem;line-height:1.4;color:#46564b}.check input{accent-color:var(--forest);margin-top:3px}.generate{width:100%;padding:14px;margin-top:17px;font-size:.92rem}.small{font-size:.7rem;line-height:1.45;color:var(--muted);margin:9px 3px 0}.right{min-width:0;display:grid;grid-template-rows:minmax(410px,57vh) auto;gap:15px}.mapcard{position:relative;min-height:410px}.map{height:100%;min-height:410px;width:100%;background:#e6ece5}.mapbadge{position:absolute;z-index:2;left:13px;top:13px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:12px;padding:11px 13px;box-shadow:0 5px 18px rgba(20,40,25,.1);max-width:min(340px,calc(100% - 26px));pointer-events:none}.mapbadge b{display:block;font-size:.82rem;margin-bottom:3px}.mapbadge span{display:block;font-size:.73rem;line-height:1.4;color:var(--muted)}.results{padding:19px}.resulthead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}.resulthead h2{font-size:1.05rem;margin:0 0 4px;letter-spacing:-.02em}.resulthead p{margin:0;color:var(--muted);font-size:.78rem;line-height:1.4}.stats{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.stat{background:#f2f7f1;border:1px solid #e1eae0;border-radius:10px;padding:8px 10px;min-width:79px}.stat b{display:block;color:var(--forest);font-size:.96rem}.stat span{font-size:.66rem;color:var(--muted)}.hidden{display:none!important}.stops{display:grid;gap:8px}.stop{display:grid;grid-template-columns:33px minmax(0,1fr) auto;gap:10px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:11px}.num{width:31px;height:31px;border-radius:10px;background:var(--forest);color:#fff;display:grid;place-items:center;font-size:.8rem;font-weight:850}.stopinfo{min-width:0}.stopinfo b{font-size:.84rem;display:block;margin:1px 0 4px}.stopinfo p{font-size:.73rem;color:var(--muted);line-height:1.4;margin:0}.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.chip{background:#edf5ee;color:#315a41;border-radius:100px;padding:4px 7px;font-size:.65rem;font-weight:800}.links{display:flex;flex-direction:column;align-items:end;gap:5px}.link{background:none;border:0;color:var(--forest2);font-size:.74rem;text-decoration:underline;text-underline-offset:3px;font-weight:800;padding:4px;white-space:nowrap}.message{padding:11px 13px;border-radius:11px;background:#f4f7f3;color:var(--muted);font-size:.77rem;line-height:1.5;margin-top:12px}.message.warn{background:var(--gold);color:var(--goldink)}.error{background:var(--red);color:#8c2d20}.notice{padding:11px 13px;border-radius:11px;background:#f4f7f3;color:var(--muted);font-size:.72rem;line-height:1.5;margin-top:13px}.notice strong{color:#3e5145}footer{padding:0 clamp(16px,4vw,48px) 25px;display:flex;justify-content:space-between;gap:18px;color:var(--muted);font-size:.72rem}.pin{border:2px solid white;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;color:white;font-size:13px;font-weight:900;box-shadow:0 2px 7px #0004}.originpin{background:#174d3a}.storepin{background:#55936b}.routepin{background:#b66c25}.map-error{padding:20px;color:#8c2d20;font-size:.9rem}@media(max-width:970px){.layout{grid-template-columns:1fr}.side{order:1}.right{order:2;grid-template-rows:450px auto}.hero{align-items:start;flex-direction:column}.pill{align-self:flex-start}}@media(max-width:560px){.topnote{display:none}.right{grid-template-rows:390px auto}.map,.mapcard{min-height:390px}.side{padding:16px}.results{padding:14px}.resulthead{flex-direction:column}.stats{justify-content:start}.stop{grid-template-columns:32px minmax(0,1fr)}.links{grid-column:2;flex-direction:row;justify-content:start;align-items:center}footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="brandmark">↗</span><span>ruta<span style="color:var(--lime)">local</span></span></div><div class="topnote">Google Maps · Places · Routes</div></header>
+<section class="hero"><div><div class="eyebrow">Consumo local · movilidad eficiente</div><h1>Compra cerca.<br>Muévete menos.</h1><p>Selecciona lo que necesitas y encuentra comercios cercanos para organizar una ruta práctica. Los establecimientos y sus categorías dependen de la información disponible en Google Maps; la aplicación no confirma existencias.</p></div><div class="pill">🌱 Prototipo educativo</div></section>
+<main class="layout">
+<aside class="panel side">
+<section><h2 class="sectiontitle"><span class="step">1</span>¿Dónde comienzas?</h2><p class="help">Activa tu ubicación o haz clic sobre el mapa para establecer el punto de partida.</p><div class="btnrow"><button id="locateBtn" class="btn primary">◎ Mi ubicación</button><button id="resetBtn" class="btn secondary">↺ Guadalajara</button></div><div id="locationStatus" class="status">Punto de ejemplo: centro de Guadalajara. Selecciona una ubicación para comenzar.</div><div class="fields"><div class="field"><label for="radius">Radio de búsqueda</label><select id="radius"><option value="1000">1 km</option><option value="3000" selected>3 km</option><option value="5000">5 km</option><option value="10000">10 km</option></select></div><div class="field"><label for="mode">Cómo te mueves</label><select id="mode"><option value="foot">A pie</option><option value="car">Automóvil</option><option value="bike">Bicicleta</option></select></div></div></section>
+<div class="divider"></div>
+<section><h2 class="sectiontitle"><span class="step">2</span>¿Qué necesitas?</h2><p class="help">Elige una o más categorías. Google Maps identifica giros comerciales, no inventarios de productos.</p><div class="categories" id="categories">
+<label class="cat"><input type="checkbox" value="produce" checked><span class="emoji">🥑</span><span>Frutas y verduras</span></label>
+<label class="cat"><input type="checkbox" value="meat" checked><span class="emoji">🥩</span><span>Carnes y aves</span></label>
+<label class="cat"><input type="checkbox" value="dairy"><span class="emoji">🥛</span><span>Lácteos y huevos</span></label>
+<label class="cat"><input type="checkbox" value="bakery"><span class="emoji">🥖</span><span>Panadería</span></label>
+<label class="cat"><input type="checkbox" value="groceries" checked><span class="emoji">🫘</span><span>Abarrotes</span></label>
+<label class="cat"><input type="checkbox" value="cleaning"><span class="emoji">🧴</span><span>Limpieza</span></label></div></section>
+<div class="divider"></div>
+<section><h2 class="sectiontitle"><span class="step">3</span>Personaliza el recorrido</h2><div class="checks"><label class="check"><input id="localFirst" type="checkbox" checked><span><b>Priorizar comercios de barrio</b><br>Dar preferencia a mercados, tiendas especializadas y comercios pequeños cuando la clasificación disponible lo permita.</span></label><label class="check"><input id="returnHome" type="checkbox"><span><b>Regresar al punto de partida</b><br>Terminar el recorrido en el lugar donde comenzaste.</span></label></div><button id="searchBtn" class="btn primary generate">Buscar comercios y crear ruta →</button><p class="small">La priorización de comercios locales es aproximada y se basa en el tipo de establecimiento registrado en Google Maps.</p><div id="error" class="message error hidden" role="alert"></div></section>
+</aside>
+<section class="right">
+<div class="panel mapcard"><div id="map" class="map" aria-label="Mapa interactivo"></div><div class="mapbadge"><b id="mapTitle">Mapa de tu zona</b><span id="mapHint">Haz clic en el mapa para cambiar el punto de partida.</span></div></div>
+<div class="panel results"><div class="resulthead"><div><h2 id="resultTitle">Tu itinerario aparecerá aquí</h2><p id="resultSubtitle">Selecciona categorías y pulsa “Buscar comercios y crear ruta”.</p></div><div class="stats hidden" id="stats"><div class="stat"><b id="stopsStat">—</b><span>paradas</span></div><div class="stat"><b id="distanceStat">—</b><span>distancia</span></div><div class="stat"><b id="durationStat">—</b><span>traslado estimado</span></div></div></div><div id="stops" class="stops"></div><div id="uncovered" class="message warn hidden"></div><div id="routingMessage" class="message hidden"></div><div id="openNavigation" class="hidden" style="margin-top:12px"><a id="navigationLink" class="btn primary" style="display:inline-block;text-decoration:none" href="#" target="_blank" rel="noopener">Abrir navegación en Google Maps ↗</a></div><div class="notice"><strong>Datos y límites:</strong> el mapa, la búsqueda de lugares y las rutas son proporcionados por Google Maps Platform. Los resultados pueden ser incompletos y no garantizan disponibilidad de productos, horarios ni que el establecimiento sea un negocio independiente o local.</div></div>
+</section></main>
+<footer><span>Ruta Local · Prototipo educativo con Google Maps Platform</span><span><a href="https://developers.google.com/maps/documentation" target="_blank" rel="noopener">Documentación de Google Maps</a></span></footer>
+<script>
+/* 1) Pega aquí una clave de demostración de Google Maps nueva si la anterior quedó expuesta. */
+const GOOGLE_MAPS_API_KEY = "AIzaSyDbRwGzCYaGMmNjKrMVyBY2WrXSyYIUa4g";
+
+(() => {
+  'use strict';
+  const DEFAULT = {lat:20.6736, lng:-103.344};
+  const $ = id => document.getElementById(id);
+  const catNames = {produce:'Frutas y verduras',meat:'Carnes y aves',dairy:'Lácteos y huevos',bakery:'Panadería',groceries:'Abarrotes',cleaning:'Limpieza'};
+  const typeByCategory = {
+    produce:['farmers_market','food_store','grocery_store','supermarket','market','farm'],
+    meat:['butcher_shop','food_store','grocery_store','supermarket','market'],
+    dairy:['food_store','grocery_store','supermarket','market'],
+    bakery:['bakery'],
+    groceries:['grocery_store','supermarket','convenience_store','general_store','market','food_store'],
+    cleaning:['general_store','supermarket','home_goods_store','hardware_store','convenience_store']
+  };
+  const state = {origin:{...DEFAULT},places:[],selected:[],markers:[],routeLine:null,originMarker:null,radiusCircle:null,map:null,infoWindow:null,Place:null,Route:null,AdvancedMarkerElement:null,SearchNearbyRankPreference:null,LatLngBounds:null,busy:false};
+
+  function setStatus(msg, cls='') {$('locationStatus').textContent=msg;$('locationStatus').className='status '+cls;}
+  function showError(msg){$('error').textContent=msg;$('error').classList.remove('hidden');}
+  function hideError(){$('error').classList.add('hidden');$('error').textContent='';}
+  function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function chosenCats(){return [...document.querySelectorAll('#categories input:checked')].map(x=>x.value);}
+  function toLatLngLiteral(value){
+    if(!value)return null;
+    if(typeof value.lat==='function'&&typeof value.lng==='function')return {lat:value.lat(),lng:value.lng()};
+    if(Number.isFinite(value.lat)&&Number.isFinite(value.lng))return {lat:value.lat,lng:value.lng};
+    return null;
+  }
+  function distanceKm(a,b){const R=6371,rad=d=>d*Math.PI/180;const dLat=rad(b.lat-a.lat),dLng=rad(b.lng-a.lng);const z=Math.sin(dLat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(z));}
+  function selectedPlaceTypes(cats){return [...new Set(cats.flatMap(c=>typeByCategory[c]||[]))];}
+  function clearCurrentRoute(){
+    state.markers.forEach(m=>{m.map=null;});state.markers=[];
+    if(state.routeLine){state.routeLine.setMap(null);state.routeLine=null;}
+    state.places=[];state.selected=[];$('stops').innerHTML='';$('stats').classList.add('hidden');$('uncovered').classList.add('hidden');$('routingMessage').classList.add('hidden');$('openNavigation').classList.add('hidden');
+    $('resultTitle').textContent='Tu itinerario aparecerá aquí';$('resultSubtitle').textContent='Cambia la ubicación o las categorías y busca de nuevo.';$('mapTitle').textContent='Mapa de tu zona';$('mapHint').textContent='Los marcadores de comercios aparecerán al realizar una búsqueda.';
+  }
+  function updateOrigin(pos,label){
+    const p=toLatLngLiteral(pos);if(!p)return;
+    state.origin=p;state.originMarker.position=p;state.radiusCircle.setCenter(p);state.radiusCircle.setRadius(Number($('radius').value));
+    setStatus(`${label} Coordenadas: ${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}.`, 'good');state.map.panTo(p);clearCurrentRoute();
+  }
+  function markerContent(text,cls){const el=document.createElement('div');el.className=`pin ${cls}`;el.textContent=String(text);return el;}
+  function addPlaceMarker(place,number){
+    const isSelected=Boolean(number);
+    const marker=new state.AdvancedMarkerElement({map:state.map,position:{lat:place.lat,lng:place.lng},title:place.name,content:markerContent(isSelected?number:'•',isSelected?'routepin':'storepin'),gmpClickable:true});
+    marker.addListener('click',()=>{
+      const html=`<div style="max-width:240px"><b>${escapeHtml(place.name)}</b><br><span>${escapeHtml(place.address||'Dirección no disponible')}</span><br><small>${escapeHtml(place.cats.map(c=>catNames[c]).join(', '))}</small>${place.market?'<br><em>Mercado: verifica los puestos que venden cada producto.</em>':''}<br><a href="${escapeHtml(place.googleMapsURI||'https://www.google.com/maps/search/?api=1&query='+place.lat+','+place.lng)}" target="_blank" rel="noopener">Ver en Google Maps</a></div>`;
+      state.infoWindow.setContent(html);state.infoWindow.open({map:state.map,anchor:marker});
+    });
+    state.markers.push(marker);
+  }
+  function classifyPlace(place,selectedCats){
+    const types=new Set([place.primaryType,...(place.types||[])].filter(Boolean));
+    const mapped=new Set();let market=false;
+    if(types.has('farmers_market')||types.has('market')){['produce','meat','dairy','groceries'].forEach(c=>mapped.add(c));market=true;}
+    if(types.has('farm'))mapped.add('produce');
+    if(types.has('butcher_shop'))mapped.add('meat');
+    if(types.has('bakery'))mapped.add('bakery');
+    if(types.has('supermarket')){['produce','meat','dairy','groceries','cleaning'].forEach(c=>mapped.add(c));}
+    if(types.has('food_store')||types.has('grocery_store')){['produce','meat','dairy','groceries'].forEach(c=>mapped.add(c));}
+    if(types.has('convenience_store')||types.has('general_store')){['groceries','cleaning'].forEach(c=>mapped.add(c));}
+    if(types.has('home_goods_store')||types.has('hardware_store'))mapped.add('cleaning');
+    const cats=selectedCats.filter(c=>mapped.has(c));
+    const localTypes=new Set(['farmers_market','market','farm','butcher_shop','bakery','convenience_store','general_store','food_store']);
+    const local=[...types].some(t=>localTypes.has(t));
+    return {cats,market,local,types:[...types]};
+  }
+  function getText(value){if(value&&typeof value==='object'&&'text'in value)return value.text;return value||'';}
+  async function searchNearby(cats,radius){
+    const types=selectedPlaceTypes(cats);
+    const request={fields:['id','displayName','location','formattedAddress','googleMapsURI','primaryType','types'],locationRestriction:{center:state.origin,radius},includedPrimaryTypes:types,maxResultCount:20,rankPreference:state.SearchNearbyRankPreference.DISTANCE};
+    const response=await state.Place.searchNearby(request);
+    const unique=new Map();
+    for(const place of (response.places||[])){
+      const loc=toLatLngLiteral(place.location);if(!loc)continue;
+      const classified=classifyPlace(place,cats);if(!classified.cats.length)continue;
+      const dist=distanceKm(state.origin,loc);if(dist>radius/1000+0.05)continue;
+      const name=getText(place.displayName)||'Comercio sin nombre';
+      const id=place.id||`${name}-${loc.lat}-${loc.lng}`;
+      unique.set(id,{id,lat:loc.lat,lng:loc.lng,name,address:place.formattedAddress||'',googleMapsURI:place.googleMapsURI||'',primaryType:place.primaryType||'',types:classified.types,cats:classified.cats,market:classified.market,local:classified.local,dist});
+    }
+    return [...unique.values()].sort((a,b)=>a.dist-b.dist);
+  }
+  function chooseStops(places,cats){
+    const remaining=new Set(cats),chosen=[],candidates=[...places],localFirst=$('localFirst').checked;
+    while(remaining.size&&chosen.length<Math.min(cats.length,6)){
+      let best=null,bestScore=-Infinity;
+      for(const p of candidates){if(chosen.some(x=>x.id===p.id))continue;const newly=p.cats.filter(c=>remaining.has(c));if(!newly.length)continue;
+        let score=newly.length*100-p.dist*3+(localFirst?(p.local?22:0):0)+(p.market?5:0)+(p.primaryType==='supermarket'&&localFirst?-7:0);
+        if(score>bestScore){best=p;bestScore=score;}
+      }
+      if(!best)break;chosen.push(best);best.cats.forEach(c=>remaining.delete(c));
+    }
+    return {ordered:chosen,uncovered:[...remaining]};
+  }
+  function renderPlaces(places,selected){
+    state.markers.forEach(m=>{m.map=null;});state.markers=[];
+    const selectedIds=new Map(selected.map((p,i)=>[p.id,i+1]));
+    places.forEach(p=>addPlaceMarker(p,selectedIds.get(p.id)||null));
+    const bounds=new state.LatLngBounds();bounds.extend(state.origin);places.forEach(p=>bounds.extend({lat:p.lat,lng:p.lng}));state.map.fitBounds(bounds,55);
+  }
+  function renderStops(stops){
+    $('stops').innerHTML='';
+    stops.forEach((p,i)=>{
+      const node=document.createElement('article');node.className='stop';
+      const num=document.createElement('div');num.className='num';num.textContent=String(i+1);
+      const info=document.createElement('div');info.className='stopinfo';
+      const title=document.createElement('b');title.textContent=p.name;
+      const desc=document.createElement('p');desc.textContent=`${p.dist.toFixed(2)} km en línea recta desde el inicio · ${p.address||'Dirección no disponible'}`;
+      const chips=document.createElement('div');chips.className='chips';p.cats.forEach(c=>{const chip=document.createElement('span');chip.className='chip';chip.textContent=catNames[c];chips.appendChild(chip);});
+      if(p.market){const chip=document.createElement('span');chip.className='chip';chip.textContent='Verificar puestos';chips.appendChild(chip);}
+      info.append(title,desc,chips);
+      const actions=document.createElement('div');actions.className='links';
+      const focus=document.createElement('button');focus.className='link';focus.textContent='Ver en mapa';focus.addEventListener('click',()=>{state.map.panTo({lat:p.lat,lng:p.lng});state.map.setZoom(17);const marker=state.markers.find(m=>m.position&&Math.abs(m.position.lat-p.lat)<1e-6&&Math.abs(m.position.lng-p.lng)<1e-6);if(marker)google.maps.event.trigger(marker,'click');});
+      const external=document.createElement('a');external.className='link';external.textContent='Ficha ↗';external.href=p.googleMapsURI||`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;external.target='_blank';external.rel='noopener';
+      actions.append(focus,external);node.append(num,info,actions);$('stops').appendChild(node);
+    });
+  }
+  function formatDistance(m){return m>=1000?(m/1000).toFixed(1)+' km':Math.round(m)+' m';}
+  function formatDuration(ms){const min=Math.round(ms/60000);if(min<60)return `${min} min`;return `${Math.floor(min/60)} h ${min%60} min`;}
+  async function calculateRoute(stops,mode,returnHome){
+    const origin={lat:state.origin.lat,lng:state.origin.lng};
+    let destination,intermediateStops,optimized=false;
+    if(returnHome){destination=origin;intermediateStops=[...stops];optimized=stops.length>1;}
+    else {destination={lat:stops[stops.length-1].lat,lng:stops[stops.length-1].lng};intermediateStops=stops.slice(0,-1);optimized=intermediateStops.length>1;}
+    const travelMode={foot:'WALKING',car:'DRIVING',bike:'BICYCLING'}[mode]||'WALKING';
+    const request={origin,destination,travelMode,units:state.UnitSystem.METRIC,fields:['path','distanceMeters','durationMillis','viewport']};
+    if(intermediateStops.length){request.intermediates=intermediateStops.map(p=>({location:{lat:p.lat,lng:p.lng}}));}
+    if(optimized){request.optimizeWaypointOrder=true;request.fields.push('optimizedIntermediateWaypointIndices');}
+    const response=await state.Route.computeRoutes(request);
+    const route=response.routes?.[0];if(!route||!route.path?.length)throw new Error('Google Maps no devolvió una ruta para estas paradas.');
+    let orderedStops=[...stops];
+    if(optimized&&route.optimizedIntermediateWaypointIndices?.length){
+      const originalIntermediates=intermediateStops;
+      const reordered=route.optimizedIntermediateWaypointIndices.map(i=>originalIntermediates[i]).filter(Boolean);
+      if(returnHome)orderedStops=reordered;
+      else orderedStops=[...reordered,stops[stops.length-1]];
+    }
+    return {route,orderedStops};
+  }
+  function createNavigationLink(stops,mode,returnHome){
+    const start=`${state.origin.lat},${state.origin.lng}`;
+    const routeStops=returnHome?[...stops]:[...stops];
+    const destination=returnHome?start:`${routeStops[routeStops.length-1].lat},${routeStops[routeStops.length-1].lng}`;
+    const waypoints=returnHome?routeStops:routeStops.slice(0,-1);
+    const waypointParam=waypoints.length?'&waypoints='+encodeURIComponent(waypoints.map(p=>`${p.lat},${p.lng}`).join('|')):'';
+    const travelmode={foot:'walking',car:'driving',bike:'bicycling'}[mode]||'walking';
+    $('navigationLink').href=`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(destination)}${waypointParam}&travelmode=${travelmode}`;
+    $('openNavigation').classList.remove('hidden');
+  }
+  async function generate(){
+    if(state.busy)return;const cats=chosenCats();if(!cats.length){showError('Selecciona al menos una categoría de compra.');return;}
+    state.busy=true;$('searchBtn').disabled=true;$('searchBtn').textContent='Buscando comercios…';hideError();state.markers.forEach(m=>{m.map=null;});state.markers=[];if(state.routeLine){state.routeLine.setMap(null);state.routeLine=null;}state.places=[];state.selected=[];$('routingMessage').classList.add('hidden');$('uncovered').classList.add('hidden');$('openNavigation').classList.add('hidden');$('resultTitle').textContent='Buscando establecimientos';$('resultSubtitle').textContent='Consultando Google Places. Esto puede tardar unos segundos.';
+    try{
+      const radius=Number($('radius').value);const places=await searchNearby(cats,radius);
+      if(!places.length){clearCurrentRoute();$('resultTitle').textContent='No encontramos comercios compatibles';$('resultSubtitle').textContent='Prueba un radio mayor o selecciona otras categorías. Google Maps puede no tener establecimientos registrados para estos giros en la zona.';$('mapTitle').textContent='No se encontraron resultados';$('mapHint').textContent='Puedes mover el punto de partida y volver a intentar.';return;}
+      const chosen=chooseStops(places,cats);state.places=places;state.selected=chosen.ordered;renderPlaces(places,chosen.ordered);renderStops(chosen.ordered);
+      $('stats').classList.remove('hidden');$('stopsStat').textContent=chosen.ordered.length;$('distanceStat').textContent='Calculando…';$('durationStat').textContent='Calculando…';$('resultTitle').textContent='Ruta recomendada';$('resultSubtitle').textContent=`Google Places encontró ${places.length} establecimientos dentro del radio de búsqueda. La selección prioriza cobertura de categorías y proximidad.`;
+      if(chosen.uncovered.length){$('uncovered').classList.remove('hidden');$('uncovered').textContent='No se encontró un establecimiento claramente categorizado para: '+chosen.uncovered.map(c=>catNames[c]).join(', ')+'. Considera ampliar el radio o verificar un mercado cercano.';}
+      if(!chosen.ordered.length){$('distanceStat').textContent='—';$('durationStat').textContent='—';return;}
+      const result=await calculateRoute(chosen.ordered,$('mode').value,$('returnHome').checked);
+      state.selected=result.orderedStops;renderPlaces(places,state.selected);renderStops(state.selected);
+      state.routeLine=new google.maps.Polyline({map:state.map,path:result.route.path,geodesic:true,strokeColor:'#226b49',strokeOpacity:.88,strokeWeight:5});
+      if(result.route.viewport)state.map.fitBounds(result.route.viewport);
+      $('stopsStat').textContent=state.selected.length;$('distanceStat').textContent=formatDistance(result.route.distanceMeters);$('durationStat').textContent=formatDuration(result.route.durationMillis);
+      $('routingMessage').className='message';$('routingMessage').textContent='Distancia y tiempo calculados por Google Routes. El tiempo solo considera el traslado; no incluye el tiempo de compra.';
+      createNavigationLink(state.selected,$('mode').value,$('returnHome').checked);
+      $('mapTitle').textContent='Ruta y comercios cercanos';$('mapHint').textContent='Verde oscuro: punto de partida · Naranja: paradas recomendadas · Verde: otros comercios encontrados.';
+    }catch(e){
+      const raw=e?.message||String(e);let msg=raw;
+      if(/REQUEST_DENIED|ApiNotActivated|not authorized|PERMISSION_DENIED|billing/i.test(raw))msg='Google rechazó la solicitud. Revisa que la clave sea válida y que Maps JavaScript API, Places API (New) y Compute Routes estén disponibles para esa clave de demostración.';
+      showError(msg);$('resultTitle').textContent='No se pudo generar la ruta';$('resultSubtitle').textContent='Comprueba la clave, la conexión y los servicios disponibles; después inténtalo de nuevo.';
+    }finally{state.busy=false;$('searchBtn').disabled=false;$('searchBtn').textContent='Buscar comercios y crear ruta →';}
+  }
+  async function initializeGoogleMaps(){
+    const [{Map,InfoWindow,Circle,Polyline},{LatLngBounds,UnitSystem},{AdvancedMarkerElement},{Place,SearchNearbyRankPreference},{Route}]=await Promise.all([
+      google.maps.importLibrary('maps'),google.maps.importLibrary('core'),google.maps.importLibrary('marker'),google.maps.importLibrary('places'),google.maps.importLibrary('routes')
+    ]);
+    state.Place=Place;state.Route=Route;state.AdvancedMarkerElement=AdvancedMarkerElement;state.SearchNearbyRankPreference=SearchNearbyRankPreference;state.LatLngBounds=LatLngBounds;state.UnitSystem=UnitSystem;
+    state.map=new Map($('map'),{center:DEFAULT,zoom:14,mapId:'DEMO_MAP_ID',mapTypeControl:false,streetViewControl:false,fullscreenControl:true,gestureHandling:'greedy'});
+    state.infoWindow=new InfoWindow();
+    state.originMarker=new AdvancedMarkerElement({map:state.map,position:DEFAULT,title:'Punto de partida',content:markerContent('⌖','originpin'),gmpClickable:true});
+    state.radiusCircle=new Circle({map:state.map,center:DEFAULT,radius:Number($('radius').value),strokeColor:'#39865b',strokeOpacity:.8,strokeWeight:1,fillColor:'#70b888',fillOpacity:.08});
+    state.map.addListener('click',e=>{if(e.latLng)updateOrigin(e.latLng,'Punto de partida fijado en el mapa.');});
+    $('resetBtn').addEventListener('click',()=>{updateOrigin(DEFAULT,'Punto de ejemplo: centro de Guadalajara.');state.map.setZoom(14);});
+    $('locateBtn').addEventListener('click',()=>{
+      if(!navigator.geolocation){setStatus('Tu navegador no ofrece geolocalización. Haz clic en el mapa.','warn');return;}
+      $('locateBtn').disabled=true;setStatus('Solicitando permiso de ubicación…');
+      navigator.geolocation.getCurrentPosition(pos=>{const point={lat:pos.coords.latitude,lng:pos.coords.longitude};updateOrigin(point,'Ubicación detectada.');state.map.setZoom(15);$('locateBtn').disabled=false;},()=>{setStatus('No se pudo obtener la ubicación. Revisa los permisos o haz clic en el mapa.','warn');$('locateBtn').disabled=false;},{enableHighAccuracy:false,timeout:10000,maximumAge:300000});
+    });
+    $('radius').addEventListener('change',()=>{state.radiusCircle.setRadius(Number($('radius').value));clearCurrentRoute();});
+    $('searchBtn').addEventListener('click',generate);
+    window.addEventListener('resize',()=>google.maps.event.trigger(state.map,'resize'));
+    setStatus('Mapa de Google listo. Selecciona una ubicación y busca comercios.','good');
+  }
+  window.initRutaLocalGoogleMaps=async()=>{try{await initializeGoogleMaps();}catch(e){showError(e?.message||'No fue posible iniciar Google Maps.');$('map').innerHTML='<div class="map-error">No se pudo cargar Google Maps. Revisa tu clave y la conexión.</div>';}};
+  window.gm_authFailure=()=>{showError('Google no autorizó la clave. Comprueba que sea una clave de Maps Demo y que no haya alcanzado su límite diario.');};
+  function loadGoogleMaps(){
+    if(!GOOGLE_MAPS_API_KEY||GOOGLE_MAPS_API_KEY.includes('PEGA_AQUI')){
+      $('map').innerHTML='<div class="map-error">Falta configurar la clave. Abre este archivo y sustituye PEGA_AQUI_TU_CLAVE_DE_DEMO por tu clave de Google Maps Demo.</div>';
+      showError('Antes de usar el prototipo, pega tu clave de demostración en la constante GOOGLE_MAPS_API_KEY, al inicio del código.');return;
+    }
+    const script=document.createElement('script');
+    script.src=`https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(GOOGLE_MAPS_API_KEY)}&v=weekly&language=es&region=MX&loading=async&callback=initRutaLocalGoogleMaps`;
+    script.async=true;script.onerror=()=>{showError('No se pudo descargar Google Maps JavaScript API. Revisa tu conexión y la clave.');};
+    document.head.appendChild(script);
+  }
+  loadGoogleMaps();
+})();
+</script>
+</body>
+</html>
